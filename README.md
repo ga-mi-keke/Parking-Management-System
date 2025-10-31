@@ -1,9 +1,9 @@
 ## 使うコマンド
 gitからクローン後
 ```bash
-$ pnpm install
+pnpm install
 ```
 実行
 ```bash
-$ pnpm run start:dev
+pnpm run start:dev
 ```
