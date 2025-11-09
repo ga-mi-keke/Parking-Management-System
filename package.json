@@ -1,0 +1,15 @@
+{
+  "name": "parking-management-system",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "concurrently -k -n api,web \"pnpm dev:api\" \"pnpm dev:web\"",
+    "dev:api": "pnpm --filter api start:dev",
+    "dev:web": "pnpm --filter web dev",
+    "build": "pnpm --filter api build && pnpm --filter web build",
+    "lint": "pnpm --filter api lint && pnpm --filter web check"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.0"
+  }
+}
