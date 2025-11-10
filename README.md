@@ -5,6 +5,7 @@
 cd apps/api
 cp .env.example .env  # DATABASE_URL を TimescaleDB/PostgreSQL に合わせて編集
 pnpm install
+pnpm prisma generate
 pnpm run db:migrate   # DB にテーブルを作成 (要: TimescaleDB/PostgreSQL 起動済み)
 pnpm run db:seed      # サンプルの駐車スペースを投入
 pnpm run start:dev    # http://localhost:3000
