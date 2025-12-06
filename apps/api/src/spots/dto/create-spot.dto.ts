@@ -1,4 +1,5 @@
 export class CreateSpotDto {
-  label!: string;
-  occupied?: boolean;
+  name!: string;
+  capacity!: number;
+  occupied?: number;
 }

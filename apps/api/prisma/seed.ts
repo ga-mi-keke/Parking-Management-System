@@ -3,15 +3,14 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  const defaultSpots = ['A-01', 'A-02', 'B-01', 'B-02'];
-
   await prisma.$transaction([
-    prisma.parkingSpot.deleteMany(),
-    prisma.parkingSpot.createMany({
-      data: defaultSpots.map((label, index) => ({
-        label,
-        occupied: index === 1, // mark a single spot as occupied for demo
-      })),
+    prisma.parkingLot.deleteMany(),
+    prisma.parkingLot.createMany({
+      data: [
+        { name: '駐車場A', capacity: 120, occupied: 0 },
+        { name: '駐車場B', capacity: 80, occupied: 0 },
+        { name: '駐車場C', capacity: 40, occupied: 0 },
+      ],
     }),
   ]);
 }
