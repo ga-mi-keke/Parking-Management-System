@@ -1,4 +1,5 @@
 export class UpdateSpotDto {
-  label?: string;
-  occupied?: boolean;
+  name?: string;
+  capacity?: number;
+  occupied?: number;
 }
