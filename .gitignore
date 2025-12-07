@@ -1,2 +1,7 @@
 node_modules/
 dist/
+python/yolo_env/
+video/*.mp4
+img/*.jpg
+img/*.png
+yolov8s.pt

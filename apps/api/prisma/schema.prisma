@@ -10,9 +10,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model ParkingSpot {
+model ParkingLot {
   id        Int      @id @default(autoincrement())
-  label     String   @unique
-  occupied  Boolean  @default(false)
+  name      String   @unique
+  capacity  Int
+  occupied  Int      @default(0)
   updatedAt DateTime @default(now()) @updatedAt
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateSpotDto } from './dto/create-spot.dto';
 import { UpdateSpotDto } from './dto/update-spot.dto';
@@ -8,29 +8,35 @@ export class SpotsService {
   constructor(private readonly prisma: PrismaService) {}
 
   findAll() {
-    return this.prisma.parkingSpot.findMany({
-      orderBy: { label: 'asc' },
+    return this.prisma.parkingLot.findMany({
+      orderBy: { name: 'asc' },
     });
   }
 
   create(dto: CreateSpotDto) {
-    return this.prisma.parkingSpot.create({
+    const occupied = dto.occupied ?? 0;
+    if (occupied > dto.capacity) {
+      throw new BadRequestException('occupied cannot exceed capacity');
+    }
+
+    return this.prisma.parkingLot.create({
       data: {
-        label: dto.label,
-        occupied: dto.occupied ?? false,
+        name: dto.name,
+        capacity: dto.capacity,
+        occupied,
       },
     });
   }
 
   update(id: number, dto: UpdateSpotDto) {
-    return this.prisma.parkingSpot.update({
+    return this.prisma.parkingLot.update({
       where: { id },
       data: dto,
     });
   }
 
   remove(id: number) {
-    return this.prisma.parkingSpot.delete({
+    return this.prisma.parkingLot.delete({
       where: { id },
     });
   }
