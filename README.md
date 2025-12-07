@@ -33,3 +33,14 @@ API は CORS 済みなので、フロントから `http://localhost:3000/spots` 
 pnpm install          # ルートで一括インストール
 pnpm dev              # API と Web を並列起動
 ```
+### python環境初期化と実行方法
+```bash
+#以下のコマンドで初期化
+~/Parking-Management-System$ source python/init_from_root.sh
+#成功した場合
+(yolo_env)~/Parking-Management-System$
+#./videoにmp4を追加してpython/car_counter.pyのパスを設定すれば
+(yolo_env)~/Parking-Management-System$ python3 python/car_counter.py
+#で動画に対して処理を実行できる linux環境だとカメラにアクセスできないようなのでカメラを使いたければwindowsで
+#動画は容量の問題でコミットできなかったので各自で適当なものを使って試してください
+```
