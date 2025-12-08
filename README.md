@@ -33,6 +33,24 @@ API は CORS 済みなので、フロントから `http://localhost:3000/spots` 
 pnpm install          # ルートで一括インストール
 pnpm dev              # API と Web を並列起動
 ```
+### 実行できない場合
+```bash
+cd apps/api　
+pnpm add dotenv
+cd ../.. #元のディレクトリに戻る
+sudo apt update
+sudo apt install postgresql postgresql-contrib #PostgreSQLのインストール
+
+sudo service postgresql start #サービス起動
+sudo -u postgres psql #postgresユーザーとしてログイン
+ALTER USER postgres WITH PASSWORD 'postgres'; #パスワードを変更
+\q #終了
+
+pnpm prisma generate
+
+pnpm dev #最後
+
+```
 ### python環境初期化と実行方法
 ```bash
 #以下のコマンドで初期化
