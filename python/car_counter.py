@@ -3,7 +3,11 @@ from deep_sort_realtime.deepsort_tracker import DeepSort
 import cv2
 import math
 
-model = YOLO("yolov8s.pt")
+cv2.setUseOptimized(True)
+cv2.setNumThreads(8)
+cv2.waitKey(33)
+
+model = YOLO("yolov8n.pt")
 WHEEL_CLASSES = ['car', 'truck', 'bus']
 
 tracker = DeepSort(
@@ -13,29 +17,41 @@ tracker = DeepSort(
     n_init=3,
     #boxの最大追従距離？
     max_iou_distance=0.3,
-    nn_budget=100
+    nn_budget=50,
+    embedder="mobilenet"
 )
 
 STOP_THRESHOLD = 15
 STOP_FRAMES = 12
+frame_id = 0
+SKIP = 3
 
 track_history = {}
 parked_ids = set()
 ##################################################
-#この下のパスを書き換えたら別の動画にも処理ができます#
+#この下のパスを書き換えたら別の動画にも処理ができます
 ##################################################
-cap = cv2.VideoCapture("video/car_video.mp4")
+cap = cv2.VideoCapture("video/car_video_demo.mp4")
 # cap = cv2.VideoCapture(0)
+
+cv2.waitKey(max(1,int(1000/cap.get(cv2.CAP_PROP_FPS))))
+
 if not cap.isOpened():
     print("Error: Could not open video stream.")
     exit()
 
 while True:
     ret, frame = cap.read()
+    # print("frame:", cap.get(cv2.CAP_PROP_POS_FRAMES))
     if not ret:
         break
+    
+    frame_id+=1
+    if frame_id%SKIP == 0:
+        continue
 
-    results = model.predict(frame, imgsz=640, device='cpu', verbose=False)
+    # results = model.predict(frame, imgsz=640, device='cpu', verbose=False)
+    results = model(frame, imgsz=480, device='cpu', verbose=False)
 
     detections = []
     for result in results:
