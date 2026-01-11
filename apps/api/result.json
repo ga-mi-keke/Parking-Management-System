@@ -1,0 +1,17 @@
+{
+  "timestamp": "2025-12-21T18:13:20.461Z",
+  "target_file": "parkingimg2.jpg",
+  "mime_type": "image/jpeg",
+  "result": {
+    "status": "混雑",
+    "occupancy_rate": 87,
+    "car_count": 26,
+    "notes": "複数箇所に空きスペースが確認できます。",
+    "description": "駐車場は混雑しています。"
+  },
+  "db_update": {
+    "parking_lot": "駐車場A",
+    "occupied": 25,
+    "capacity": 25
+  }
+}

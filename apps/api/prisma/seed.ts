@@ -7,8 +7,8 @@ async function main() {
     prisma.parkingLot.deleteMany(),
     prisma.parkingLot.createMany({
       data: [
-        { name: '駐車場A', capacity: 120, occupied: 0 },
-        { name: '駐車場B', capacity: 80, occupied: 0 },
+        { name: '駐車場A', capacity: 22, occupied: 0 },
+        { name: '駐車場B', capacity: 12, occupied: 0 },
         { name: '駐車場C', capacity: 40, occupied: 0 },
       ],
     }),
