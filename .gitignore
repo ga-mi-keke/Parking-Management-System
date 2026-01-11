@@ -3,5 +3,7 @@ dist/
 python/yolo_env/
 video/*.mp4
 img/*.jpg
+img/*.jpeg
 img/*.png
 *.pt
+yolo_env/
