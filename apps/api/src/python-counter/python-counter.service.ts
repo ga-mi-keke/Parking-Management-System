@@ -14,6 +14,11 @@ export class PythonCounterService implements OnApplicationBootstrap {
 
   constructor(private readonly prisma: PrismaService) {}
 
+  private readonly defaultOccupied: Record<string, number> = {
+    駐車場A: 4,
+    駐車場B: 11,
+  };
+
   private readonly targets: Target[] = [
     {
       parkingName: '駐車場A',
@@ -44,19 +49,15 @@ export class PythonCounterService implements OnApplicationBootstrap {
   private readonly pythonBin = process.env.PYTHON_BIN || 'python3';
 
   async onApplicationBootstrap(): Promise<void> {
-    const enabled = (process.env.PYTHON_COUNTER_AUTO_RUN ?? 'true').toLowerCase() !== 'false';
-    if (!enabled) {
-      this.logger.log('Python counter auto-run disabled (PYTHON_COUNTER_AUTO_RUN=false)');
-      return;
-    }
+    await this.applyDefaultOccupied();
+  }
 
-    setTimeout(() => {
-      this.runAll().catch((error) => {
-        this.logger.error('Python counter auto-run failed', error as Error);
-      });
-    }, 0);
-
-    this.logger.log('Python counter auto-run scheduled in background');
+  private async applyDefaultOccupied(): Promise<void> {
+    const updates = Object.entries(this.defaultOccupied).map(([name, count]) =>
+      this.updateParking(name, count),
+    );
+    await Promise.all(updates);
+    this.logger.log('Python counter disabled; default occupied values applied');
   }
 
   private findImage(paths: string[]): string | undefined {
